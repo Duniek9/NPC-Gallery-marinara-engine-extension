@@ -1,0 +1,18 @@
+[
+  {
+    "id": "npc-gallery",
+    "name": "NPC Gallery",
+    "description": "Manage persistent NPC profiles and control whether NPC memory participates in generation.",
+    "phase": "post_processing",
+    "enabledByDefault": false,
+    "defaultInjectAsSection": false,
+    "category": "tracker",
+    "libraryHidden": false,
+    "runtimeDisabled": true,
+    "modeAllowlist": ["conversation", "roleplay", "visual_novel", "game"],
+    "defaultTools": [],
+    "defaultSettings": {},
+    "defaultPromptTemplate": "",
+    "execution": "feature"
+  }
+]

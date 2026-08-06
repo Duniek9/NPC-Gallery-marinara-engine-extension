@@ -1,0 +1,1 @@
+{"version":3,"file":"regex-safety.d.ts","sourceRoot":"","sources":["../../src/utils/regex-safety.ts"],"names":[],"mappings":"AAYA,MAAM,WAAW,oBAAoB;IACnC,+DAA+D;IAC/D,SAAS,CAAC,EAAE,MAAM,CAAC;IACnB,uGAAuG;IACvG,aAAa,CAAC,EAAE,MAAM,CAAC;IACvB,kGAAkG;IAClG,aAAa,CAAC,EAAE,MAAM,CAAC;CACxB;AAiBD;;;;GAIG;AACH,wBAAgB,aAAa,CAAC,MAAM,EAAE,MAAM,EAAE,OAAO,GAAE,oBAAyB,GAAG,OAAO,CAmGzF"}
