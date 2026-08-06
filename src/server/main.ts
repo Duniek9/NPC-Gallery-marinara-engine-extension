@@ -121,6 +121,19 @@ Rules:
 9. If no durable NPC information changed, return {"updates":[]}.
 10. Output JSON only, without Markdown fences or commentary.`;
 
+const STARTING_NPC_ENRICHMENT_PROMPT = `You complete persistent NPC gallery cards from structured Game Master setup data.
+
+Return only valid JSON with this shape:
+{"updates":[{"action":"create","matchId":null,"name":"exact NPC name","appearance":"concise durable physical appearance and characteristic clothing","personality":"concise stable traits, temperament, values, and speech style","description":null}]}
+
+Rules:
+1. Return exactly one update for every supplied NPC, preserving each name exactly.
+2. Fill only durable appearance and personality information.
+3. Use supplied role, description, and setting clues. Add coherent details when setup omitted them, but do not contradict supplied facts.
+4. Never include player or party characters.
+5. Keep each field concise and factual.
+6. Output JSON only, without Markdown fences or commentary.`;
+
 interface NpcGallerySettings {
   schemaVersion: 1;
   enabled: boolean;
@@ -939,11 +952,40 @@ export async function activate(context: ActivationContext): Promise<() => void> 
   const unregisterGameSetupObserver = context.api.registerGameSetupCompletedObserver(async (event) => {
     const partyNames = new Set(event.partyCharacterNames.map(normalizedNpcIdentity));
     const folder = await npcs.ensureChatFolder(event.chatId, event.chatName);
-    for (const raw of event.startingNpcs) {
+    const eligibleStartingNpcs = event.startingNpcs.filter((raw) => {
       const name = normalizeString(raw.name, NPC_TEXT_LIMITS.name);
-      if (!name || partyNames.has(normalizedNpcIdentity(name))) continue;
-      const appearance = normalizeString(raw.appearance, NPC_TEXT_LIMITS.appearance) ?? "";
-      const personality = normalizeString(raw.personality, NPC_TEXT_LIMITS.personality) ?? "";
+      return Boolean(name) && !partyNames.has(normalizedNpcIdentity(name!));
+    });
+    const missingDetails = eligibleStartingNpcs.filter((raw) =>
+      !normalizeString(raw.appearance, NPC_TEXT_LIMITS.appearance)
+      || !normalizeString(raw.personality, NPC_TEXT_LIMITS.personality));
+    const enrichedByName = new Map<string, ExtractionUpdate>();
+    if (missingDetails.length > 0) {
+      try {
+        const currentSettings = await settings.read();
+        const model = await context.api.runtime.languageModels.resolve(currentSettings.connectionId);
+        const completion = await model.chatComplete([
+          { role: "system", content: STARTING_NPC_ENRICHMENT_PROMPT },
+          { role: "user", content: `<starting_npcs>\n${JSON.stringify(missingDetails)}\n</starting_npcs>` },
+        ], { temperature: 0.25, maxTokens: 1800 });
+        const enriched = completion.content
+          ? normalizeExtractionUpdates(context.api.runtime.json.parseJsonish(completion.content))
+          : [];
+        for (const update of enriched) enrichedByName.set(normalizedNpcIdentity(update.name), update);
+      } catch (error) {
+        context.api.runtime.logger.error(error, "NPC Gallery could not enrich incomplete GM starting NPCs");
+      }
+    }
+    for (const raw of eligibleStartingNpcs) {
+      const name = normalizeString(raw.name, NPC_TEXT_LIMITS.name);
+      if (!name) continue;
+      const enrichment = enrichedByName.get(normalizedNpcIdentity(name));
+      const appearance = normalizeString(raw.appearance, NPC_TEXT_LIMITS.appearance)
+        ?? enrichment?.appearance
+        ?? "";
+      const personality = normalizeString(raw.personality, NPC_TEXT_LIMITS.personality)
+        ?? enrichment?.personality
+        ?? "";
       const background = normalizeString(raw.description, NPC_TEXT_LIMITS.description) ?? "";
       const role = normalizeString(raw.role, 200);
       const location = normalizeString(raw.location, 500);

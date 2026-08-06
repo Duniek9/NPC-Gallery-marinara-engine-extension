@@ -1,6 +1,6 @@
 {
   "name": "marinara-npc-gallery",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Persistent, editable NPC memory for Marinara Engine.",
   "main": "dist/server.mjs",
   "scripts": {

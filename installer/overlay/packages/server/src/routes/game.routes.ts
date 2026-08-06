@@ -4077,14 +4077,6 @@ function validateGameSetupPayload(setupData: Record<string, unknown>): string | 
       if (typeof name !== "string" || !name.trim()) {
         missing.push(`startingNpcs[${index}].name`);
       }
-      const appearance = npc && typeof npc === "object" && !Array.isArray(npc)
-        ? (npc as Record<string, unknown>).appearance
-        : null;
-      const personality = npc && typeof npc === "object" && !Array.isArray(npc)
-        ? (npc as Record<string, unknown>).personality
-        : null;
-      if (typeof appearance !== "string" || !appearance.trim()) missing.push(`startingNpcs[${index}].appearance`);
-      if (typeof personality !== "string" || !personality.trim()) missing.push(`startingNpcs[${index}].personality`);
     }
   }
   return missing.length > 0
