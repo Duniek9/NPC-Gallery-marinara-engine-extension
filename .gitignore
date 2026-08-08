@@ -1,0 +1,4 @@
+Set-Content -LiteralPath .gitignore -Value @(
+    "node_modules/"
+    "*.tsbuildinfo"
+)

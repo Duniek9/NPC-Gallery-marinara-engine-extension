@@ -1,1 +1,0 @@
-{"version":3,"file":"manifest.js","sourceRoot":"","sources":["../../../../../src/features/function-calls/tools/read-chat-summary/manifest.ts"],"names":[],"mappings":"AAEA,MAAM,CAAC,MAAM,2BAA2B,GAAG;IACzC,IAAI,EAAE,mBAAmB;IACzB,WAAW,EAAE,wDAAwD;IACrE,UAAU,EAAE;QACV,IAAI,EAAE,QAAQ;QACd,UAAU,EAAE,EAAE;KACf;CACuB,CAAC"}
