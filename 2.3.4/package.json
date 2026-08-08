@@ -1,0 +1,29 @@
+{
+  "name": "marinara-npc-gallery",
+  "version": "1.1.1",
+  "description": "Persistent, editable NPC memory for Marinara Engine.",
+  "main": "dist/server.mjs",
+  "scripts": {
+    "build": "vite build",
+    "check": "tsc --noEmit",
+    "dev": "vite build --watch",
+    "pack:extension": "pnpm build && node scripts/package.mjs",
+    "install:dev": "pnpm pack:extension && node scripts/install-dev.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.20.0",
+      "onFail": "download"
+    }
+  },
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.0"
+  }
+}

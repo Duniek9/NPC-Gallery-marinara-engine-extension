@@ -1,0 +1,1 @@
+{"version":3,"file":"manifest.js","sourceRoot":"","sources":["../../../../../src/features/function-calls/tools/spotify-get-current-playback/manifest.ts"],"names":[],"mappings":"AAEA,MAAM,CAAC,MAAM,qCAAqC,GAAG;IACnD,IAAI,EAAE,8BAA8B;IACpC,WAAW,EACT,mKAAmK;IACrK,UAAU,EAAE;QACV,IAAI,EAAE,QAAQ;QACd,UAAU,EAAE,EAAE;KACf;CACuB,CAAC"}
