@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "npc-gallery",
+  "name": "NPC Gallery",
+  "version": "1.2.1",
+  "description": "Persistent, editable NPC memory for Marinara Engine.",
+  "engine": {
+    "min": "2.4.2",
+    "maxExclusive": "2.5.0"
+  },
+  "kind": ["agent"],
+  "entrypoints": {
+    "server": "server.mjs",
+    "client": "client.js",
+    "agents": "agents.json"
+  },
+  "contributions": {
+    "slots": ["chat-settings", "chat-runtime"],
+    "agentDetail": {
+      "agentIds": ["npc-gallery"]
+    }
+  },
+  "files": [],
+  "permissions": ["agent-runtime", "routes", "storage", "ui"],
+  "restartRequired": true
+}

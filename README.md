@@ -8,6 +8,7 @@ An external Marinara Engine capability package for persistent, editable NPC memo
 | --- | --- | --- |
 | 2.3.4 | 1.1.1 | [`2.3.4`](2.3.4/) |
 | 2.4.1 | 1.2.0 | [`2.4.1`](2.4.1/) |
+| 2.4.2 | 1.2.1 | [`2.4.2`](2.4.2/) |
 
 Do not install an edition into a different Marinara Engine version. Each installer validates the Engine version before changing files.
 
