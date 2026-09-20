@@ -1,6 +1,6 @@
 # NPC Gallery updater release workflow
 
-NPC Gallery 1.3.0 and newer use an exact-version catalog at `updates/catalog.json`. Marinara's launchers run the persistent reconciler after an Engine update and dependency installation, but before Engine compilation.
+NPC Gallery 1.3.0 and newer use an exact-version catalog at `updates/catalog.json`. Starting with 1.3.1, a temporary launcher wrapper survives Marinara replacing its real launcher during an Engine update, then runs the persistent reconciler after dependency installation and before Engine compilation.
 
 ## Publish support for a Marinara release
 
